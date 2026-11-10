@@ -18,8 +18,8 @@ device layout while typing. Not affiliated with CharaChorder or
   pulled in as npm deps: `cc-extension-core` and `tangent-cc-lib` — this repo
   is a thin site-specific adapter over that shared core, not where the
   device-layout logic itself lives
-- Package manager is **yarn** (yarn.lock is authoritative; package-lock.json
-  also exists but yarn is what the README and `packageManager` field specify)
+- Package manager is **yarn** (yarn.lock is the only lockfile; package-lock.json
+  is not in the repo. yarn is what the README and `packageManager` field specify)
 - Unit tests: Jest + ts-jest + jsdom. E2E tests: Playwright
 
 ## Key commands
