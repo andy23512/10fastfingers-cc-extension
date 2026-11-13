@@ -81,20 +81,28 @@ unpacked); in Firefox load any file under `dist/` as a temporary add-on
   `src/apply-theme.ts` reads colors straight off a few representative
   elements with `getComputedStyle` (the typing text for symbol-color, a
   language-switcher link's text color in the footer's "Typing tests in other
-  languages" section for pointer-color, `<body>` for both frame-color and
-  key-color — the site has no second neutral tone to tell those two apart)
+  languages" section for pointer-color, and the theme gradient's 100% stop
+  on `[data-testid="main-root"]::after` for both frame-color and key-color —
+  the site has no second neutral tone to tell those two apart; `<body>`'s
+  background is only the fallback if that gradient can't be read)
   and writes them as inline `--cc-*` styles on `<html>`, which take
   precedence over `src/style.css`'s fixed values. If even one of those
   elements is missing or resolves to transparent, detection discards the
   whole set and falls back to the fixed values — never a half-applied theme.
   `content_script.tsx` re-runs this on a 1s interval, since 10FastFingers can
   switch its theme in-page without a reload and emits no event when it does.
-  frame/key deliberately read `<body>` rather than
+  frame/key deliberately do not read `<body>` first or
   `[data-testid="Header-root"]`: the header stays a fixed dark navy in every
-  theme except Default Light, while symbol-color (the typing text itself)
-  stays a fixed dark near-black in every theme, so reading frame/key from the
-  header paired dark-on-dark and made the overlay nearly unreadable in those
-  themes; `<body>`'s background stays light across all of them instead.
+  theme except Default Light, so it paired dark-on-dark with some themes'
+  symbol color. `<body>`'s background is a fixed light inline style
+  (`#F1FCFF`) that does not change with the theme, so in Default (Dark),
+  where symbol-color is light (`rgb(214, 217, 224)` measured), it paired
+  light-on-light and made the overlay nearly unreadable. The theme's real
+  background is a `linear-gradient` painted on `main-root`'s `::after`
+  pseudo-element (the element's own `backgroundImage` is `none`), so
+  `readGradientStopColor` checks `::after`, then `::before`, then the element
+  itself. Measured only in Default (Light) and Default (Dark) so far; the
+  other themes are unverified.
   pointer-color has gone through two prior sources: the header's primary
   "Test" button (dropped along with the `modifier` attribute pattern it
   relied on in a 10FastFingers redesign, which silently broke live theme
