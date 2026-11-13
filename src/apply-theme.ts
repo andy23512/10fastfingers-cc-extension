@@ -42,7 +42,19 @@ function readGradientStopColor(
   if (!element) {
     return null;
   }
-  const backgroundImage = getComputedStyle(element).backgroundImage;
+  // The theme gradient is painted on main-root's ::after pseudo-element, not
+  // on main-root itself (whose own backgroundImage is "none"), so check the
+  // pseudo-elements first. <body>'s background is a fixed light inline style
+  // in every theme, so falling back to it in a dark theme pairs light symbols
+  // with a light frame.
+  const backgroundImage = [
+    getComputedStyle(element, "::after").backgroundImage,
+    getComputedStyle(element, "::before").backgroundImage,
+    getComputedStyle(element).backgroundImage,
+  ].find((image) => image && image !== "none");
+  if (!backgroundImage) {
+    return null;
+  }
   const stops = [
     ...backgroundImage.matchAll(/(rgba?\([^)]*\))\s*(\d+(?:\.\d+)?%)?/g),
   ];
