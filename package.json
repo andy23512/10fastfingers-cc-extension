@@ -1,6 +1,6 @@
 {
   "name": "10fastfingers-cc-extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An unofficial browser extension that displays the layout of CharaChorder input devices on 10FastFingers.",
   "main": "index.js",
   "scripts": {

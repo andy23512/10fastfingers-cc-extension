@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.1](https://github.com/andy23512/10fastfingers-cc-extension/releases/tag/1.1)
 
 - Fix overlay colors in dark themes
 

@@ -4,7 +4,7 @@
   "name": "10FastFingers CC Extension",
   "short_name": "10FF CC Ext",
   "description": "An unofficial browser extension for showing layout of CharaChorder input devices on 10FastFingers",
-  "version": "1.0",
+  "version": "1.1",
   "browser_specific_settings": {
     "gecko": {
       "id": "@10fastfingers-cc-extension.andy23512",
